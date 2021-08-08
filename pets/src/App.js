@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Accordion from './components/Accordion';
 import Search from './components/Search';
+import Dropdown from './components/Dropdown';
 
 const items = [
     {
@@ -25,10 +26,38 @@ const items = [
     }
 ]
 
+const options = [
+    {
+        label: 'Shiba Inu',
+        value: 'Shiba Inu'
+    },
+    {
+        label: 'Labrador',
+        value: 'Labrador'
+    },
+    {
+        label: 'French Bulldog',
+        value: 'French Bulldog'
+    },
+    {
+        label: 'Huskey',
+        value: 'Huskey'
+    },
+    {
+        label: 'Border Collie',
+        value: 'Border Collie'
+    }
+]
+
 export default () => {
+    const [selected, setSelected] = useState(options[0]) 
     return (
         <div>
-            <Search />
+            <Dropdown
+                selected={selected}
+                onSelectedChange={setSelected}
+                options={options}
+            />
         </div>
     );
 };
