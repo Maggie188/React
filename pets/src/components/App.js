@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import Accordion from './components/Accordion';
-import Search from './components/Search';
-import Dropdown from './components/Dropdown';
+import Accordion from './Accordion';
+import Search from './Search';
+import Dropdown from './Dropdown';
+import youtube from '../apis/youtube';
+import VideoList from './VideoList';
+
 
 const items = [
     {
@@ -49,15 +52,33 @@ const options = [
     }
 ]
 
-export default () => {
-    const [selected, setSelected] = useState(options[0]) 
+
+
+const App = () => {
+    const [selected, setSelected] = useState('') 
+    const [videos, setVideos] = useState([]);
+
+    const onTermSubmit = async term => {
+        const response = await youtube.get('/search', {
+            params: {
+                q: term
+            }
+        });
+    
+        setVideos(response.data.items);
+    };
+    
     return (
-        <div>
+        <div className="ui container">
             <Dropdown
                 selected={selected}
                 onSelectedChange={setSelected}
                 options={options}
+                onTermSubmit={onTermSubmit}
             />
+            <VideoList videos={videos}/>
         </div>
     );
 };
+
+export default App;

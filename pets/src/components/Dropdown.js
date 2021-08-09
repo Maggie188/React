@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = ({ options, selected, onSelectedChange, onTermSubmit}) => {
     const [open, setOpen] = useState(false);
     const ref = useRef();
 
     useEffect(() => {
-        const onBodyClick = (event) => {
+        const onBodyClick = event => {
           if (ref.current.contains(event.target)) {
             return;
           }
@@ -18,6 +18,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         };
       }, []);
 
+    
     const renderedOptions = options.map(option => {
         if (option.value === selected.value) {
             return null;
@@ -27,7 +28,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
             <div 
                 key={option.value}
                 className="item"
-                onClick={ () => {onSelectedChange(option);setOpen(!open)} }
+                onClick={ () => {onSelectedChange(option);setOpen(!open);onTermSubmit(selected.value)} }
             >
                 {option.label}
             </div>
@@ -49,7 +50,6 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         </div>
     );
 };
-
 
 
 export default Dropdown;
