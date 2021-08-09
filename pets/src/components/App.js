@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Accordion from './Accordion';
 import Search from './Search';
 import Dropdown from './Dropdown';
 import youtube from '../apis/youtube';
 import VideoList from './VideoList';
+import VideoDetail from './VideoDetail';
 
 
 const items = [
@@ -55,8 +56,13 @@ const options = [
 
 
 const App = () => {
-    const [selected, setSelected] = useState('') 
+    const [selected, setSelected] = useState(options[0]); 
     const [videos, setVideos] = useState([]);
+    const [selectedVideo, setSelectedVideo] = useState(null);
+
+    useEffect(() => {
+        onTermSubmit(selected.value)
+    }, []);
 
     const onTermSubmit = async term => {
         const response = await youtube.get('/search', {
@@ -64,8 +70,15 @@ const App = () => {
                 q: term
             }
         });
-    
+
         setVideos(response.data.items);
+    };
+    
+
+    console.log(selectedVideo);
+    
+    const onVideoSelect = video => {
+        setSelectedVideo(video)
     };
     
     return (
@@ -76,7 +89,16 @@ const App = () => {
                 options={options}
                 onTermSubmit={onTermSubmit}
             />
-            <VideoList videos={videos}/>
+            <div className="ui grid">
+                <div className="ui row">
+                    <div className="eleven wide column">
+                        <VideoDetail video={selectedVideo}/>
+                    </div>
+                    <div className="five wide column">
+                        <VideoList videos={videos} onVideoSelect={onVideoSelect}/>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
