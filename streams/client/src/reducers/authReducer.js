@@ -2,7 +2,7 @@ const INITIAL_STATE = {
     isSIgnedIn: null
 };
 
-export default (state = INITIAL_STATE, action) => {
+const authReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'SIGN_IN':
             return { ...state, isSignedIn: true };
@@ -11,4 +11,6 @@ export default (state = INITIAL_STATE, action) => {
         default:
             return state;
     }
-}
+};
+
+export default authReducer;
