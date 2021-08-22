@@ -1,3 +1,16 @@
 {
-    "streams": []
+  "streams": [
+    {
+      "title": "Minnie plays toys",
+      "description": "This is made by me",
+      "userId": "112369318181290479533",
+      "id": 1
+    },
+    {
+      "title": "Minnie plays toys",
+      "description": "This is made by me",
+      "userId": "112369318181290479533",
+      "id": 2
+    }
+  ]
 }
